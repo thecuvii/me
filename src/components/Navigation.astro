@@ -1,6 +1,32 @@
+---
+import lightMode from '../light.svg'
+---
+
 <div class="nav-links">
-  <a href="/">Home</a>
-  <a href="/about">About</a>
-  <a href="/blog">Blog</a>
-  <a href="/tags/">Tags</a>
+  <a href="/">周记<em>!</em>WEEK</a>
+  <a href="/about">简历<em>!</em>RESUME</a>
+  <a href="/blog">标签<em>!</em>TAGS</a>
+  <a href="/tags/">玩具<em>!</em>TOYS</a>
+  <a href="/tags/">照片<em>!</em>PHOTOS</a>
+  <img class="mode-icon" src={lightMode} alt="lightMode" />
 </div>
+
+<style>
+  .nav-links {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    font-size: 1rem;
+    line-height: 1.2rem;
+  }
+
+  .nav-links a {
+    margin-right: 3rem;
+    color: var(--link-color);
+    text-decoration: none;
+  }
+
+  .nav-links a em {
+    margin: 0 0.15rem;
+  }
+</style>
