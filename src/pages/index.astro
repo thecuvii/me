@@ -1,11 +1,24 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
 import Greeting from '../components/Greeting.jsx'
+import BlockTitle from '../components/BlockTitle.astro'
 
-const pageTitle = 'Home Page'
+const pageTitle = 'AqingCyan'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <h2>My awesome blog subtitle</h2>
-  <Greeting client:load messages={['Hej', 'Hallo', 'Hola', 'Habari']} />
+  <BlockTitle title="关于我" backgroundText="AqingCyan" />
+  <p class="about-me">
+    这是一段自我介绍，如果可以的话，我想通过这样的方式让你了解我。这里放置着我这些年沉淀的经验，如果你喜欢，可以将他们带走。这是一段自我介绍，如果可以的话，我想通过这样的方式让你了解我。这里放置着我这些年沉淀的经验，如果你喜欢，可以将他们带走。这是一段自我介绍，如果可以的话，我想通过这样的方式让你了解我。这里放置着我这些年沉淀的经验……….
+  </p>
+  <BlockTitle title="博客" backgroundText="Blogs" />
 </BaseLayout>
+
+<style>
+  .about-me {
+    margin: 0 0 3rem 0;
+    font-size: 1rem;
+    line-height: 2.5rem;
+    color: var(--primary-color);
+  }
+</style>

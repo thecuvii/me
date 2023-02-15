@@ -1,7 +1,7 @@
 ---
-import Hamburger from './Hamburger.astro'
+// import Hamburger from './Hamburger.astro'
 import Navigation from './Navigation.astro'
-import ThemeIcon from './ThemeIcon.astro'
+// import ThemeIcon from './ThemeIcon.astro'
 import logoImg from '../logo.png'
 ---
 
@@ -17,10 +17,9 @@ import logoImg from '../logo.png'
 <style>
   nav {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     height: 6rem;
     width: 100%;
-    margin: 0 auto;
   }
 
   .nav-logo {
@@ -32,7 +31,7 @@ import logoImg from '../logo.png'
     transition: opacity 0.2s;
   }
 
-  @media screen and (max-width: 980px) {
+  @media screen and (max-width: 900px) {
     .nav-logo {
       opacity: 0;
       pointer-events: none;

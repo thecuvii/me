@@ -1,0 +1,38 @@
+---
+const { title, backgroundText } = Astro.props
+---
+
+<div class="block-title">
+  {backgroundText}
+  <h1>{title}</h1>
+</div>
+
+<style>
+  .block-title {
+    position: relative;
+    height: 6rem;
+    font-size: 4.75rem;
+    color: var(--block-background-color);
+  }
+
+  .block-title h1 {
+    position: absolute;
+    top: 3.1rem;
+    z-index: 10;
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 500;
+    color: var(--block-title-color);
+  }
+
+  .block-title h1::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0.28rem;
+    z-index: -1;
+    width: 100%;
+    height: 0.25rem;
+    background: var(--block-title-underline-color);
+  }
+</style>

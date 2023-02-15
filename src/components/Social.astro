@@ -1,14 +1,28 @@
 ---
-const { platform, username } = Astro.props
+import email from '../email-icon.svg'
+import tweet from '../tweet-icon.svg'
+import github from '../github-icon.svg'
 ---
 
+<div class="social-container">
+  <img src={email} alt="email" />
+  <img src={github} alt="github" />
+  <img src={tweet} alt="tweet" />
+</div>
+
 <style>
-  a {
-    padding: 0.5rem 1rem;
-    color: white;
-    background-color: #4c1d95;
-    text-decoration: none;
+  .social-container {
+    position: absolute;
+    top: 7.5rem;
+    left: -7.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .social-container img {
+    width: 2rem;
+    height: 2rem;
+    margin-bottom: 2.5rem;
   }
 </style>
-
-<a href={`https://www.${platform}.com/${username}`}>{platform}</a>
