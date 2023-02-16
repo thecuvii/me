@@ -12,7 +12,10 @@ body {
   --block-background-color: #f4f4f4;
   --block-title-underline-color: #ff914d;
 
+  --line-color: #d8d8d8;
+
   --primary-color: #222222;
+  --second-color: #838383;
 }
 
 .dark body {
