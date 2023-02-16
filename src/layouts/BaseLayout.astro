@@ -32,7 +32,16 @@ const { pageTitle } = Astro.props
 <style>
   .content-container {
     position: relative;
-    width: 40.5rem;
+    max-width: 40.5rem;
     margin: 3rem auto;
+    transition: width 0.2s;
+  }
+
+  @media screen and (max-width: 700px) {
+    .content-container {
+      width: 100%;
+      padding: 5%;
+      box-sizing: border-box;
+    }
   }
 </style>
