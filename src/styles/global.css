@@ -10,12 +10,13 @@ body {
   --link-color: #838383;
   --block-title-color: #222222;
   --block-background-color: #f4f4f4;
-  --block-title-underline-color: #ff914d;
 
+  --theme-color: #ff914d;
   --line-color: #d8d8d8;
 
   --primary-color: #222222;
   --second-color: #838383;
+  --third-color: #5d5d5d;
 }
 
 .dark body {

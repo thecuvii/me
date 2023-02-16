@@ -1,8 +1,11 @@
 ---
+import dayjs from 'dayjs'
 import BaseLayout from '../layouts/BaseLayout.astro'
-import Greeting from '../components/Greeting.jsx'
 import BlockTitle from '../components/BlockTitle.astro'
 import BlogBlockTitle from '../components/BlogBlockTitle.astro'
+
+const allPosts = await Astro.glob('../pages/posts/*.md')
+const postLists = allPosts.map((item) => item.frontmatter)
 
 const pageTitle = 'AqingCyan'
 ---
@@ -14,6 +17,18 @@ const pageTitle = 'AqingCyan'
   </p>
   <BlockTitle title="博客" backgroundText="Blogs" />
   <BlogBlockTitle year="2023" count="8" />
+  {
+    postLists.map((post, index) => (
+      <div class="post-title-box">
+        <span class="post-index">{index + 1 > 10 ? index + 1 : `0${index + 1}`}</span>
+        <div class="title-content">
+          <p class="title">{post.title}</p>
+          <p class="date">{dayjs(post.pubDate).format('YYYY/MM/DD')}</p>
+          <p class="desc">{post.description}</p>
+        </div>
+      </div>
+    ))
+  }
 </BaseLayout>
 
 <style>
@@ -22,5 +37,41 @@ const pageTitle = 'AqingCyan'
     font-size: 1rem;
     line-height: 2.5rem;
     color: var(--primary-color);
+  }
+
+  .post-title-box {
+    display: flex;
+    justify-content: flex-start;
+    margin: 2.2rem 0;
+  }
+
+  .post-title-box .post-index {
+    margin-right: 3.875rem;
+    font-size: 1.75rem;
+    line-height: 3.125rem;
+    font-family: 'Nanum Gothic';
+    color: #0f0f0f;
+  }
+
+  .post-title-box .title-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-title-box .title-content .title {
+    margin: 0;
+    font-size: 1.75rem;
+    line-height: 3.125rem;
+  }
+
+  .post-title-box .title-content .date {
+    font-size: 0.75rem;
+    color: var(--third-color);
+  }
+
+  .post-title-box .title-content .desc {
+    font-size: 1.125rem;
+    font-weight: 300;
+    color: var(--third-color);
   }
 </style>

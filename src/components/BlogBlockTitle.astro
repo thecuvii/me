@@ -1,9 +1,13 @@
 ---
 const { year, count } = Astro.props
+const yearList = year.split('')
+const lastOne = yearList.pop()
 ---
 
 <div class="blog-block-title">
-  <span class="year">{year}</span>
+  <div class="year">
+    <span>{yearList.join('')}</span><span>{lastOne}</span>
+  </div>
   <div class="count">
     <span>共{count}篇文章</span>
     <span>{count} articles in total</span>
@@ -26,12 +30,17 @@ const { year, count } = Astro.props
     font-weight: 500;
   }
 
+  .blog-block-title .year span:last-child {
+    color: var(--theme-color);
+  }
+
   .blog-block-title .count {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-top: 0.25rem;
     font-size: 1.125rem;
+    font-weight: lighter;
     line-height: 1.125rem;
     color: var(--second-color);
   }
