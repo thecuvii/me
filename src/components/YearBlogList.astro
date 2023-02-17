@@ -1,0 +1,91 @@
+---
+import dayjs from 'dayjs'
+import BlogBlockTitle from './BlogBlockTitle.astro'
+
+const { thisYearList, year } = Astro.props
+---
+
+<div>
+  <BlogBlockTitle year={year} count={thisYearList.length} />
+  {
+    thisYearList.map(({ frontmatter, url }, index) => (
+      <div class="post-title-box">
+        <span class="post-index">{index + 1 > 10 ? index + 1 : `0${index + 1}`}</span>
+        <div class="title-content">
+          <a class="title" href={url}>
+            {frontmatter.title}
+            <span class="tag">{frontmatter.tags[0]}</span>
+          </a>
+          <p class="date">{dayjs(frontmatter.pubDate).format('YYYY/MM/DD')}</p>
+          <p class="desc">{frontmatter.description}</p>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .post-title-box {
+    display: flex;
+    justify-content: flex-start;
+    margin: 2.2rem 0;
+  }
+
+  .post-title-box .post-index {
+    margin-right: 3.875rem;
+    font-size: 1.75rem;
+    line-height: 3.125rem;
+    font-family: 'Nanum Gothic';
+    color: #0f0f0f;
+  }
+
+  .post-title-box .title-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title-content {
+    flex: 1;
+  }
+
+  .post-title-box .title-content .title {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 0;
+    font-size: 1.75rem;
+    line-height: 3.125rem;
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  .post-title-box .title-content .title:hover {
+    color: var(--link-color);
+  }
+
+  .post-title-box .title-content .title .tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1.375rem;
+    margin-top: 0.875rem;
+    padding: 0 0.75rem;
+    box-sizing: border-box;
+    border: 1px solid var(--theme-color);
+    border-radius: 2px;
+    font-size: 0.75rem;
+    color: var(--theme-color);
+  }
+
+  .post-title-box .title-content .date {
+    font-size: 0.75rem;
+    color: var(--third-color);
+  }
+
+  .post-title-box .title-content .desc {
+    font-size: 1.125rem;
+    font-weight: 300;
+    color: var(--third-color);
+  }
+</style>
