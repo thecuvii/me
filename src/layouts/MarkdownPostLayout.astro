@@ -25,7 +25,8 @@ const { frontmatter } = Astro.props
   .blog-info {
     display: flex;
     align-items: center;
-    margin: 1rem 0 3rem;
+    flex-wrap: wrap;
+    margin: 1rem 0 2.5rem;
     font-size: 0.8125rem;
     color: var(--primary-color);
   }
@@ -37,7 +38,7 @@ const { frontmatter } = Astro.props
   }
 
   .blog-info .tag {
-    margin: 0 0.2rem;
+    margin: 0.3rem 0.2rem;
     padding: 0.125rem 0.75rem;
     box-sizing: border-box;
     border: 1px solid var(--theme-color);
@@ -84,6 +85,7 @@ const { frontmatter } = Astro.props
   .article p {
     font-size: 1rem;
     line-height: 2rem;
+    color: var(--primary-color);
   }
 
   .article a {
@@ -107,8 +109,16 @@ const { frontmatter } = Astro.props
     margin: 0;
     padding-left: 0.875rem;
     box-sizing: border-box;
-    /* border-left: 0.25rem solid #c1c1c1; */
     color: var(--blockquote-color);
+  }
+
+  .article img {
+    width: 100%;
+  }
+
+  .article blockquote p,
+  .article blockquote li {
+    color: unset;
   }
 
   .article blockquote::before {
@@ -125,9 +135,27 @@ const { frontmatter } = Astro.props
   .article li {
     font-size: 1rem;
     line-height: 1.95rem;
+    color: var(--primary-color);
   }
 
   .article ul li::marker {
     color: #d9d9d9;
+  }
+
+  .article code {
+    font-family: DM Mono, Input Mono, Fira Code, monospace;
+    font-size: 0.9rem;
+  }
+
+  .article p code,
+  .article li code {
+    font-weight: bold;
+  }
+
+  .article p code::before,
+  .article li code::before,
+  .article p code::after,
+  .article li code::after {
+    content: '`';
   }
 </style>

@@ -58,6 +58,22 @@ Prettier 作为代码格式化程序，只关心代码风格而完全不关心�
 
 但是，这种方法也给我带来了很多麻烦：
 
+```jsx
+<BaseLayout pageTitle={frontmatter.title}>
+  <h1 class="blog-title">{frontmatter.title}</h1>
+  <p class="blog-info">
+    By <em>{frontmatter.author}</em>
+    <span class="date">{dayjs(frontmatter.pubDate).format('YYYY/MM/DD')}</span>
+    {frontmatter.tags.map((tag) => (
+      <span class="tag">{tag}</span>
+    ))}
+  </p>
+  <article class="article">
+    <slot />
+  </article>
+</BaseLayout>
+```
+
 > 我的观点如下：
 >
 > 1. 只单纯使用 Prettier 十分合理 - 开箱即用是个很棒的功能
@@ -83,6 +99,8 @@ Prettier 作为代码格式化程序，只关心代码风格而完全不关心�
 <GitHubLink repo="antfu/eslint-config" name="@antfu/eslint-config" />
 
 从结果来看，使用 ESLint 其实也可以非常简单：
+
+![img](https://antfu.me/images/a-paris-5.jpg)
 
 ```bash
 npm i -D @antfu/eslint-config
