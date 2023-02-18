@@ -17,6 +17,8 @@ body {
   --primary-color: #222222;
   --second-color: #838383;
   --third-color: #5d5d5d;
+
+  --blockquote-color: #909090;
 }
 
 .dark body {

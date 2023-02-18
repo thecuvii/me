@@ -1,44 +1,133 @@
 ---
+import dayjs from 'dayjs'
 import BaseLayout from './BaseLayout.astro'
 const { frontmatter } = Astro.props
 ---
 
 <BaseLayout pageTitle={frontmatter.title}>
-  <p>Published on: {frontmatter.pubDate.slice(0, 10)}</p>
-  <p><em>{frontmatter.description}</em></p>
-  <p>Written by {frontmatter.author}</p>
-  <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
-
-  <div class="tags">
-    {
-      frontmatter.tags.map((tag) => (
-        <p class="tag">
-          <a href={`/tags/${tag}`}>{tag}</a>
-        </p>
-      ))
-    }
-  </div>
-
-  <slot />
+  <h1 class="blog-title">{frontmatter.title}</h1>
+  <p class="blog-info">
+    By <em>{frontmatter.author}</em>
+    <span class="date">{dayjs(frontmatter.pubDate).format('YYYY/MM/DD')}</span>
+    {frontmatter.tags.map((tag) => <span class="tag">{tag}</span>)}
+  </p>
+  <article class="article"><slot /></article>
 </BaseLayout>
 
-<style>
-  a {
-    color: #00539f;
+<style is:global>
+  .blog-title {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--primary-color);
   }
 
-  .tags {
+  .blog-info {
     display: flex;
-    flex-wrap: wrap;
-    margin: 0 auto;
+    align-items: center;
+    margin: 1rem 0 3rem;
+    font-size: 0.8125rem;
+    color: var(--primary-color);
   }
 
-  .tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: 0.5em;
-    padding: 0.5em 1em;
-    font-size: 1.15em;
-    background-color: #f8fcfd;
+  .blog-info .date {
+    margin: 0 0.5rem;
+    font-family: 'ABeeZee';
+    color: var(--second-color);
+  }
+
+  .blog-info .tag {
+    margin: 0 0.2rem;
+    padding: 0.125rem 0.75rem;
+    box-sizing: border-box;
+    border: 1px solid var(--theme-color);
+    border-radius: 2px;
+    font-size: 0.75rem;
+    color: var(--theme-color);
+  }
+
+  .article h1 {
+    font-size: 1.75rem;
+    font-weight: 400;
+    color: var(--primary-color);
+  }
+  .article h2 {
+    font-size: 1.375rem;
+    font-weight: 400;
+    color: var(--primary-color);
+  }
+
+  .article h3 {
+    font-size: 1.125rem;
+    font-weight: 400;
+    color: var(--primary-color);
+  }
+
+  .article h4 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--primary-color);
+  }
+
+  .article h5 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--primary-color);
+  }
+
+  .article h6 {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--primary-color);
+  }
+
+  .article p {
+    font-size: 1rem;
+    line-height: 2rem;
+  }
+
+  .article a {
+    position: relative;
+    color: unset;
+    text-decoration: none;
+  }
+
+  .article a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.0625rem;
+    width: 100%;
+    height: 0.0625rem;
+    border-bottom: 0.0625rem solid;
+  }
+
+  .article blockquote {
+    position: relative;
+    margin: 0;
+    padding-left: 0.875rem;
+    box-sizing: border-box;
+    /* border-left: 0.25rem solid #c1c1c1; */
+    color: var(--blockquote-color);
+  }
+
+  .article blockquote::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    display: block;
+    height: 100%;
+    width: 0.25rem;
+    background: #c1c1c1;
+    border-radius: 0.125rem;
+  }
+
+  .article li {
+    font-size: 1rem;
+    line-height: 1.95rem;
+  }
+
+  .article ul li::marker {
+    color: #d9d9d9;
   }
 </style>
