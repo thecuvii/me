@@ -1,6 +1,5 @@
 ---
 import Header from '../components/Header.astro'
-import Social from '../components/Social.astro'
 
 import '../styles/global.css'
 import 'prism-theme-vars/base.css'
@@ -19,10 +18,8 @@ const { pageTitle } = Astro.props
   <body>
     <Header />
     <div class="content-container">
-      <Social />
       <slot />
     </div>
-    <!-- <Footer /> -->
     <script>
       import '../scripts/menu.js'
     </script>
@@ -40,6 +37,7 @@ const { pageTitle } = Astro.props
   @media screen and (max-width: 700px) {
     .content-container {
       width: 100%;
+      margin: 0 auto;
       padding: 2rem;
       box-sizing: border-box;
     }

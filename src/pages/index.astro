@@ -1,10 +1,9 @@
 ---
 import dayjs from 'dayjs'
-import _ from 'lodash'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import BlockTitle from '../components/BlockTitle.astro'
 import YearBlogList from '../components/YearBlogList.astro'
-import { log } from 'astro/dist/core/logger/core'
+import Social from '../components/Social.astro'
 
 const allPosts = await Astro.glob('../pages/posts/*.md')
 const postCollects = {}
@@ -23,6 +22,7 @@ const pageTitle = 'AqingCyan'
 
 <BaseLayout pageTitle={pageTitle}>
   <BlockTitle title="关于我" backgroundText="AqingCyan" />
+  <Social />
   <p class="about-me">
     这是一段自我介绍，如果可以的话，我想通过这样的方式让你了解我。这里放置着我这些年沉淀的经验，如果你喜欢，可以将他们带走。这是一段自我介绍，如果可以的话，我想通过这样的方式让你了解我。这里放置着我这些年沉淀的经验，如果你喜欢，可以将他们带走。这是一段自我介绍，如果可以的话，我想通过这样的方式让你了解我。这里放置着我这些年沉淀的经验……….
   </p>

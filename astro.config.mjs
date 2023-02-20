@@ -8,5 +8,6 @@ export default defineConfig({
   integrations: [react()],
   markdown: {
     syntaxHighlight: 'prism',
+    rehypePlugins: ['rehype-slug', ['rehype-autolink-headings', { behavior: 'prepend' }]],
   },
 })

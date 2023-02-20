@@ -7,7 +7,7 @@ author: 'Astro Learner'
 image:
   url: 'https://astro.build/assets/blog/astro-1-release-update/cover.jpeg'
   alt: 'The Astro logo with the word One.'
-tags: ['astro', 'blogging', 'learning in public']
+tags: ['blogging', 'learning in public']
 ---
 
 > 感谢 [AqingCyan](https://github.com/AqingCyan) 对本文进行翻译，英文原文: [English Version](/posts/why-not-prettier)。
@@ -19,6 +19,10 @@ tags: ['astro', 'blogging', 'learning in public']
 ## 我喜欢 Prettier
 
 [Prettier](https://prettier.io/) 是一个优秀的工具，它为我节省了很多时间。我很感激维护者和贡献者的努力使之成为可能，并为社区中整洁代码的样貌奠定了良好的风格基础。我不得不承认这篇文章多少有点标题党，我其实经常使用 Prettier 来制作交互式文档与 playground，例如 [VueUse](https://github.com/vueuse/vueuse/blob/c7dd1a48471d0a8b4f2b5a567baa12c24504eaee/scripts/utils.ts#L36-L46) 和 [UnoCSS](https://github.com/unocss/unocss/blob/7c332f235aff2045addb60c2668331a3ccfd1359/packages/inspector/client/composables/usePrettify.ts)。我喜欢它对大部分编程语言提供开箱即用的支持。我可以用不到 5 分钟的时间来集成 Prettier ，以生成漂亮的代码。
+
+| a    | b    | c    |
+| ---- | ---- | ---- |
+| name | name | name |
 
 ## 那为什么不用呢？
 
@@ -100,7 +104,7 @@ Prettier 作为代码格式化程序，只关心代码风格而完全不关心�
 
 从结果来看，使用 ESLint 其实也可以非常简单：
 
-![img](https://antfu.me/images/a-paris-5.jpg)
+![img](https://antfu.me/images/a-paris-5.jpg) <sup><em>hello world in 伦敦</em></sup>
 
 ```bash
 npm i -D @antfu/eslint-config

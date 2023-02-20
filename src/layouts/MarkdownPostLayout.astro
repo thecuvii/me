@@ -1,7 +1,8 @@
 ---
 import dayjs from 'dayjs'
 import BaseLayout from './BaseLayout.astro'
-const { frontmatter } = Astro.props
+
+const { frontmatter, headings } = Astro.props
 ---
 
 <BaseLayout pageTitle={frontmatter.title}>
@@ -11,7 +12,34 @@ const { frontmatter } = Astro.props
     <span class="date">{dayjs(frontmatter.pubDate).format('YYYY/MM/DD')}</span>
     {frontmatter.tags.map((tag) => <span class="tag">{tag}</span>)}
   </p>
-  <article class="article"><slot /></article>
+  <article class="article">
+    <slot />
+  </article>
+  <div class="toc-close">
+    {
+      headings
+        .filter((head) => [2, 3].includes(head.depth))
+        .map((head) => (
+          <p>
+            <span style={`width: ${(3 / head.depth) * 1}rem; margin-right: ${2 - (3 / head.depth) * 1}rem`} />
+            <a href={`#${head.slug}`}>{head.text}</a>
+          </p>
+        ))
+    }
+  </div>
+
+  <div class="toc-open">
+    {
+      headings
+        .filter((head) => [2, 3].includes(head.depth))
+        .map((head) => (
+          <p>
+            <span style={`width: ${(3 / head.depth) * 1}rem; margin-right: ${2 - (3 / head.depth) * 1}rem`} />
+            <a href={`#${head.slug}`}>{head.text}</a>
+          </p>
+        ))
+    }
+  </div>
 </BaseLayout>
 
 <style is:global>
@@ -47,39 +75,122 @@ const { frontmatter } = Astro.props
     color: var(--theme-color);
   }
 
-  .article h1 {
-    font-size: 1.75rem;
+  .toc-close,
+  .toc-open {
+    position: fixed;
+    top: 30%;
+    right: 1rem;
+  }
+
+  .toc-open {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .toc-close p a {
+    opacity: 0;
+  }
+
+  .toc-open p,
+  .toc-close p {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.875rem;
+    color: var(--toc-color);
+  }
+
+  .toc-open p span,
+  .toc-close p span {
+    display: block;
+    height: 0.375rem;
+    background: #d9d9d9;
+    border-radius: 0.1875rem;
+  }
+
+  .toc-close p span {
+    width: 0.375rem !important;
+  }
+
+  .toc-open p a,
+  .toc-close p a {
+    color: unset;
+    text-decoration: none;
+    width: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .toc-open p a::after {
+    display: none;
+  }
+
+  .article h1,
+  .article h2,
+  .article h3,
+  .article h4,
+  .article h5,
+  .article h6 {
+    position: relative;
     font-weight: 400;
     color: var(--primary-color);
   }
+
+  .article h1 a[aria-hidden='true'],
+  .article h2 a[aria-hidden='true'],
+  .article h3 a[aria-hidden='true'],
+  .article h4 a[aria-hidden='true'],
+  .article h5 a[aria-hidden='true'],
+  .article h6 a[aria-hidden='true'] {
+    position: absolute;
+    left: -1.2rem;
+    width: 1.2rem;
+    opacity: 0;
+    transition: 0.2s;
+  }
+
+  .article h1:hover a[aria-hidden='true'],
+  .article h2:hover a[aria-hidden='true'],
+  .article h3:hover a[aria-hidden='true'],
+  .article h4:hover a[aria-hidden='true'],
+  .article h5:hover a[aria-hidden='true'],
+  .article h6:hover a[aria-hidden='true'] {
+    opacity: 0.8;
+  }
+
+  .article h1 a[aria-hidden='true']::after,
+  .article h2 a[aria-hidden='true']::after,
+  .article h3 a[aria-hidden='true']::after,
+  .article h4 a[aria-hidden='true']::after,
+  .article h5 a[aria-hidden='true']::after,
+  .article h6 a[aria-hidden='true']::after {
+    display: none;
+  }
+
+  .article h1 {
+    font-size: 1.75rem;
+  }
   .article h2 {
     font-size: 1.375rem;
-    font-weight: 400;
-    color: var(--primary-color);
   }
 
   .article h3 {
     font-size: 1.125rem;
-    font-weight: 400;
-    color: var(--primary-color);
   }
 
   .article h4 {
     font-size: 1.1rem;
-    font-weight: 400;
-    color: var(--primary-color);
   }
 
   .article h5 {
     font-size: 1rem;
-    font-weight: 400;
-    color: var(--primary-color);
   }
 
   .article h6 {
     font-size: 0.9rem;
-    font-weight: 400;
-    color: var(--primary-color);
   }
 
   .article p {
@@ -158,4 +269,27 @@ const { frontmatter } = Astro.props
   .article li code::after {
     content: '`';
   }
+
+  @media screen and (max-width: 1050px) {
+    .toc-close,
+    .toc-open {
+      display: none;
+    }
+  }
 </style>
+
+<script>
+  const elements = [...(document.getElementsByClassName('icon-link') || [])]
+  elements.forEach((ele) => (ele.innerHTML = '#'))
+
+  const tocCloseEle = document.getElementsByClassName('toc-close')[0] as HTMLElement
+  const tocOpenEle = document.getElementsByClassName('toc-open')[0] as HTMLElement
+  tocCloseEle.addEventListener('mouseover', (event) => {
+    tocCloseEle.style.opacity = '0'
+    tocOpenEle.style.opacity = '1'
+  })
+  tocCloseEle.addEventListener('mouseout', () => {
+    tocCloseEle.style.opacity = '1'
+    tocOpenEle.style.opacity = '0'
+  })
+</script>
