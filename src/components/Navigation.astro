@@ -1,14 +1,15 @@
 ---
-import lightMode from '../light.svg'
+import lightMode from '../images/light.svg'
+import darkMode from '../images/dark.svg'
 ---
 
 <div class="nav-links">
-  <a href="/">周记<em>!</em>WEEK</a>
-  <a href="/about">简历<em>!</em>RESUME</a>
-  <a href="/blog">标签<em>!</em>TAGS</a>
-  <a href="/tags/">玩具<em>!</em>TOYS</a>
-  <a href="/tags/">照片<em>!</em>PHOTOS</a>
-  <img class="mode-icon" id="themeToggle" src={lightMode} alt="lightMode" />
+  <a href="/">文章<em>!</em>BLOG</a>
+  <a href="/weekly">周记<em>!</em>WEEK</a>
+  <a href="/tags">标签<em>!</em>TAGS</a>
+
+  <img class="mode-icon" id="themeToggleOne" src={lightMode} alt="lightMode" />
+  <img class="mode-icon" id="themeToggleTwo" src={darkMode} alt="darkMode" />
 </div>
 
 <style>
@@ -31,8 +32,18 @@ import lightMode from '../light.svg'
   }
 
   .nav-links .mode-icon {
+    width: 1.687rem;
+    height: 1.687rem;
     margin-right: 2rem;
     cursor: pointer;
+  }
+
+  #themeToggleOne {
+    display: block;
+  }
+
+  #themeToggleTwo {
+    display: none;
   }
 
   @media screen and (max-width: 790px) {
@@ -55,8 +66,12 @@ import lightMode from '../light.svg'
 
   if (theme === 'light') {
     document.documentElement.classList.remove('dark')
+    document.getElementById('themeToggleOne').style.display = 'block'
+    document.getElementById('themeToggleTwo').style.display = 'none'
   } else {
     document.documentElement.classList.add('dark')
+    document.getElementById('themeToggleOne').style.display = 'none'
+    document.getElementById('themeToggleTwo').style.display = 'block'
   }
 
   window.localStorage.setItem('theme', theme)
@@ -69,5 +84,14 @@ import lightMode from '../light.svg'
     localStorage.setItem('theme', isDark ? 'dark' : 'light')
   }
 
-  document.getElementById('themeToggle').addEventListener('click', handleToggleClick)
+  document.getElementById('themeToggleOne').addEventListener('click', () => {
+    handleToggleClick()
+    document.getElementById('themeToggleOne').style.display = 'none'
+    document.getElementById('themeToggleTwo').style.display = 'block'
+  })
+  document.getElementById('themeToggleTwo').addEventListener('click', () => {
+    handleToggleClick()
+    document.getElementById('themeToggleOne').style.display = 'block'
+    document.getElementById('themeToggleTwo').style.display = 'none'
+  })
 </script>

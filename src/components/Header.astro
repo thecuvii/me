@@ -1,11 +1,11 @@
 ---
 import Navigation from './Navigation.astro'
-import logoImg from '../logo.png'
+import logoImg from '../images/logo.png'
 ---
 
 <header>
   <nav>
-    <img class="nav-logo" src={logoImg} alt="logoImg" />
+    <img class="nav-logo" src={logoImg} alt="logoImg" id="logo" />
     <Navigation />
   </nav>
 </header>
@@ -25,6 +25,7 @@ import logoImg from '../logo.png'
     width: 5rem;
     height: 5rem;
     transition: opacity 0.2s;
+    cursor: pointer;
   }
 
   @media screen and (max-width: 900px) {
@@ -34,3 +35,7 @@ import logoImg from '../logo.png'
     }
   }
 </style>
+
+<script>
+  document.getElementById('logo').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }))
+</script>
