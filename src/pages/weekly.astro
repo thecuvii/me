@@ -1,0 +1,27 @@
+---
+import dayjs from 'dayjs'
+import BaseLayout from '../layouts/BaseLayout.astro'
+import BlockTitle from '../components/BlockTitle.astro'
+import YearBlogList from '../components/YearBlogList.astro'
+
+const allWeeks = await Astro.glob('../pages/weekly/*.md')
+const postCollects = {}
+allWeeks.forEach((item) => {
+  const { pubDate } = item.frontmatter
+  const year = dayjs(pubDate).year()
+  if (postCollects[year]) {
+    postCollects[year].push(item)
+  } else {
+    postCollects[year] = [item]
+  }
+})
+---
+
+<BaseLayout pageTitle="周记">
+  <BlockTitle title="周记" backgroundText="Weekly" />
+  {
+    Object.entries(postCollects)
+      .sort((postOne, postTwo) => parseInt(postTwo[0]) - parseInt(postOne[0]))
+      .map((item) => <YearBlogList year={item[0]} thisYearList={item[1]} />)
+  }
+</BaseLayout>

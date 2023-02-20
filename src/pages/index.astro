@@ -6,8 +6,10 @@ import YearBlogList from '../components/YearBlogList.astro'
 import Social from '../components/Social.astro'
 
 const allPosts = await Astro.glob('../pages/posts/*.md')
+const allWeeks = await Astro.glob('../pages/weekly/*.md')
+const allBlogs = [...allPosts, ...allWeeks]
 const postCollects = {}
-allPosts.forEach((item) => {
+allBlogs.forEach((item) => {
   const { pubDate } = item.frontmatter
   const year = dayjs(pubDate).year()
   if (postCollects[year]) {
