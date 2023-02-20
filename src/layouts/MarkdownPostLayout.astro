@@ -284,7 +284,7 @@ const { frontmatter, headings } = Astro.props
 
   const tocCloseEle = document.getElementsByClassName('toc-close')[0] as HTMLElement
   const tocOpenEle = document.getElementsByClassName('toc-open')[0] as HTMLElement
-  tocCloseEle.addEventListener('mouseover', (event) => {
+  tocCloseEle.addEventListener('mouseover', () => {
     tocCloseEle.style.opacity = '0'
     tocOpenEle.style.opacity = '1'
   })

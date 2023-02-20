@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro'
+import BlockTitle from '../../components/BlockTitle.astro'
 
 const allPosts = await Astro.glob('../posts/*.md')
 
@@ -8,11 +9,13 @@ const pageTitle = 'Tag Index'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
+  <BlockTitle title="标签" backgroundText="Tags" />
   <div class="tags">
     {
       tags.map((tag) => (
         <p class="tag">
           <a href={`/tags/${tag}`}>{tag}</a>
+          <span>3</span>
         </p>
       ))
     }
@@ -20,22 +23,41 @@ const pageTitle = 'Tag Index'
 </BaseLayout>
 
 <style>
-  a {
-    color: #00539f;
-  }
-
   .tags {
+    margin: 1rem auto;
     display: flex;
     flex-wrap: wrap;
-    margin: 0 auto;
   }
 
   .tag {
-    margin: 0.25em;
-    border: dotted 1px #a1a1a1;
-    border-radius: 0.5em;
-    padding: 0.5em 1em;
-    font-size: 1.15em;
-    background-color: #f8fcfd;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    margin-right: 2rem;
+    padding: 0 1.25rem;
+    border: 1px solid #090909;
+    border-radius: 4px;
+    background: #ffffff;
+  }
+
+  .tag a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 1rem;
+  }
+
+  .tag span {
+    position: absolute;
+    right: -1rem;
+    display: block;
+    height: 3.3125rem;
+    padding: 0 0.3rem;
+    background: #090909;
+    line-height: 3.3125rem;
+    color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 0 6px #5d5d5d;
   }
 </style>
