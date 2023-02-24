@@ -45,6 +45,8 @@ html.dark {
 body {
   margin: 0 auto;
   width: 100%;
+  --background-color: #ffffff;
+
   --link-color: #838383;
   --block-title-color: #222222;
   --block-background-color: #f4f4f4;
@@ -63,6 +65,8 @@ body {
 
 .dark body {
   background-color: #252525;
+
+  --background-color: #252525;
 
   --block-title-color: #ffffff;
   --block-background-color: #3f3f3f;
