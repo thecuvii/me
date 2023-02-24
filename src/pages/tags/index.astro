@@ -2,20 +2,32 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import BlockTitle from '../../components/BlockTitle.astro'
 
-const allPosts = await Astro.glob('../posts/*.md')
+const allPosts = await Astro.glob('../posts/*.{md,mdx}')
+const allWeeks = await Astro.glob('../weekly/*.{md,mdx}')
+const allBlogs = [...allPosts, ...allWeeks]
 
-const tags = [...new Set(allPosts.map((post) => post.frontmatter.tags).flat())]
-const pageTitle = 'Tag Index'
+const tags = {}
+allBlogs
+  .map((post) => post.frontmatter.tags)
+  .flat()
+  .forEach((item) => {
+    if (tags[item]) {
+      tags[item] = tags[item] + 1
+    } else {
+      tags[item] = 1
+    }
+  })
+const pageTitle = '标签'
 ---
 
 <BaseLayout pageTitle={pageTitle}>
   <BlockTitle title="标签" backgroundText="Tags" />
   <div class="tags">
     {
-      tags.map((tag) => (
+      Object.entries(tags).map((tag) => (
         <p class="tag">
-          <a href={`/tags/${tag}`}>{tag}</a>
-          <span>3</span>
+          <a href={`/tags/${tag[0]}`}>{tag[0]}</a>
+          <span>{tag[1]}</span>
         </p>
       ))
     }

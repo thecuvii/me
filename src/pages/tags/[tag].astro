@@ -3,11 +3,13 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
 import YearBlogList from '../../components/YearBlogList.astro'
 
 export async function getStaticPaths() {
-  const allPosts = await Astro.glob('../posts/*.md')
-  const tags = Array.from(new Set(allPosts.map((item) => item.frontmatter.tags).flat()))
+  const allPosts = await Astro.glob('../posts/*.{md,mdx}')
+  const allWeeks = await Astro.glob('../weekly/*.{md,mdx}')
+  const allBlogs = [...allPosts, ...allWeeks]
+  const tags = Array.from(new Set(allBlogs.map((item) => item.frontmatter.tags).flat()))
 
   return tags.map((tag) => {
-    const filteredPosts = allPosts.filter((post) => post.frontmatter.tags.includes(tag))
+    const filteredPosts = allBlogs.filter((post) => post.frontmatter.tags.includes(tag))
 
     return { params: { tag }, props: { posts: filteredPosts } }
   })

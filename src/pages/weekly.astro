@@ -4,7 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import BlockTitle from '../components/BlockTitle.astro'
 import YearBlogList from '../components/YearBlogList.astro'
 
-const allWeeks = await Astro.glob('../pages/weekly/*.md')
+const allWeeks = await Astro.glob('../pages/weekly/*.{md,mdx}')
 const postCollects = {}
 allWeeks.forEach((item) => {
   const { pubDate } = item.frontmatter

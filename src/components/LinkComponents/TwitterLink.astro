@@ -1,0 +1,12 @@
+---
+import LogosTwitter from '~icons/logos/twitter'
+
+import './link.css'
+
+const { text, href } = Astro.props
+---
+
+<a class="icon-a" href={href}>
+  <LogosTwitter class="icon" style="font-size: 0.83rem" />
+  {text}
+</a>

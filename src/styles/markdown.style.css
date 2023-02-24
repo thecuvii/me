@@ -1,0 +1,145 @@
+.article h1,
+.article h2,
+.article h3,
+.article h4,
+.article h5,
+.article h6 {
+  position: relative;
+  font-weight: 400;
+  color: var(--primary-color);
+}
+
+.article h1 a[aria-hidden='true'],
+.article h2 a[aria-hidden='true'],
+.article h3 a[aria-hidden='true'],
+.article h4 a[aria-hidden='true'],
+.article h5 a[aria-hidden='true'],
+.article h6 a[aria-hidden='true'] {
+  position: absolute;
+  left: -1.2rem;
+  width: 1.2rem;
+  opacity: 0;
+  transition: 0.2s;
+}
+
+.article h1:hover a[aria-hidden='true'],
+.article h2:hover a[aria-hidden='true'],
+.article h3:hover a[aria-hidden='true'],
+.article h4:hover a[aria-hidden='true'],
+.article h5:hover a[aria-hidden='true'],
+.article h6:hover a[aria-hidden='true'] {
+  opacity: 0.8;
+}
+
+.article h1 a[aria-hidden='true']::after,
+.article h2 a[aria-hidden='true']::after,
+.article h3 a[aria-hidden='true']::after,
+.article h4 a[aria-hidden='true']::after,
+.article h5 a[aria-hidden='true']::after,
+.article h6 a[aria-hidden='true']::after {
+  display: none;
+}
+
+.article h1 {
+  font-size: 1.75rem;
+}
+.article h2 {
+  font-size: 1.375rem;
+}
+
+.article h3 {
+  font-size: 1.125rem;
+}
+
+.article h4 {
+  font-size: 1.1rem;
+}
+
+.article h5 {
+  font-size: 1rem;
+}
+
+.article h6 {
+  font-size: 0.9rem;
+}
+
+.article p {
+  font-size: 1rem;
+  line-height: 2rem;
+  color: var(--primary-color);
+}
+
+.article a {
+  position: relative;
+  color: unset;
+  text-decoration: none;
+}
+
+.article a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.0625rem;
+  width: 100%;
+  height: 0.0625rem;
+  border-bottom: 0.0625rem solid;
+}
+
+.article blockquote {
+  position: relative;
+  margin: 0;
+  padding-left: 0.875rem;
+  box-sizing: border-box;
+  color: var(--blockquote-color);
+}
+
+.article img {
+  width: 100%;
+}
+
+.article blockquote p,
+.article blockquote li {
+  color: unset;
+}
+
+.article blockquote::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  display: block;
+  height: 100%;
+  width: 0.25rem;
+  background: #c1c1c1;
+  border-radius: 0.125rem;
+}
+
+.article li {
+  font-size: 1rem;
+  line-height: 1.95rem;
+  color: var(--primary-color);
+}
+
+.article ul li::marker {
+  color: #d9d9d9;
+}
+
+.article code {
+  font-family: DM Mono, Input Mono, Fira Code, monospace;
+  font-size: 0.9rem;
+}
+
+.article p code,
+.article li code {
+  font-weight: bold;
+}
+
+.article p code::before,
+.article li code::before,
+.article p code::after,
+.article li code::after {
+  content: '`';
+}
+
+.article em {
+  color: var(--primary-color);
+}

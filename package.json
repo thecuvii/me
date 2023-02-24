@@ -11,6 +11,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/mdx": "^0.17.2",
     "@astrojs/react": "^2.0.2",
     "@astrojs/rss": "^2.1.0",
     "@types/react": "^18.0.21",
@@ -24,6 +25,8 @@
     "rehype-slug": "^5.1.0"
   },
   "devDependencies": {
-    "prettier": "^2.8.3"
+    "@iconify/json": "^2.2.27",
+    "prettier": "^2.8.3",
+    "unplugin-icons": "^0.15.3"
   }
 }

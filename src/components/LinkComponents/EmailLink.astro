@@ -1,0 +1,12 @@
+---
+import FxemojiEmail from '~icons/fxemoji/email'
+
+import './link.css'
+
+const { text, href } = Astro.props
+---
+
+<a class="icon-a" href={href}>
+  <FxemojiEmail class="icon" style="font-size: 0.8rem;" />
+  {text}
+</a>

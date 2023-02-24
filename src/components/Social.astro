@@ -1,29 +1,30 @@
 ---
-import email from '../images/email-icon.svg'
-import tweet from '../images/tweet-icon.svg'
-import github from '../images/github-icon.svg'
+import FaBrandsGithub from '~icons/fa-brands/github'
+import MiEmail from '~icons/mi/email'
+import ElTwitter from '~icons/el/twitter'
 ---
 
 <div class="social-container">
-  <img src={email} alt="email" />
-  <img src={github} alt="github" />
-  <img src={tweet} alt="tweet" />
+  <FaBrandsGithub class="social-icon" />
+  <MiEmail class="social-icon" />
+  <ElTwitter class="social-icon" />
 </div>
 
 <style>
   .social-container {
     position: absolute;
-    top: 6.45rem;
+    top: 6.6rem;
     left: -7.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .social-container img {
+  .social-container .social-icon {
     width: 2rem;
     height: 2rem;
     margin-bottom: 2.5rem;
+    color: var(--second-color);
   }
 
   @media screen and (max-width: 900px) {

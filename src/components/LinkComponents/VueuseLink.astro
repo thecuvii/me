@@ -1,0 +1,12 @@
+---
+import LogosVueuse from '~icons/logos/vueuse'
+
+import './link.css'
+
+const { text, href } = Astro.props
+---
+
+<a class="icon-a" href={href}>
+  <LogosVueuse class="icon" style="font-size: 0.8rem;" />
+  {text}
+</a>

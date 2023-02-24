@@ -4,9 +4,10 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import BlockTitle from '../components/BlockTitle.astro'
 import YearBlogList from '../components/YearBlogList.astro'
 import Social from '../components/Social.astro'
+import EmailLink from '../components/LinkComponents/EmailLink.astro'
 
-const allPosts = await Astro.glob('../pages/posts/*.md')
-const allWeeks = await Astro.glob('../pages/weekly/*.md')
+const allPosts = await Astro.glob('../pages/posts/*.{md,mdx}')
+const allWeeks = await Astro.glob('../pages/weekly/*.{md,mdx}')
 const allBlogs = [...allPosts, ...allWeeks]
 const postCollects = {}
 allBlogs.forEach((item) => {
@@ -26,8 +27,13 @@ const pageTitle = 'AqingCyan'
   <BlockTitle title="关于我" backgroundText="AqingCyan" />
   <Social />
   <p class="about-me">
-    这是一段自我介绍，如果可以的话，我想通过这样的方式让你了解我。这里放置着我这些年沉淀的经验，如果你喜欢，可以将他们带走。这是一段自我介绍，如果可以的话，我想通过这样的方式让你了解我。这里放置着我这些年沉淀的经验，如果你喜欢，可以将他们带走。这是一段自我介绍，如果可以的话，我想通过这样的方式让你了解我。这里放置着我这些年沉淀的经验……….
+    Hi! 我是 AqingCyan 👋
+    <br />
+    是前端开发工程师，目前就职于网易，负责升学业务的开发，也使用 node.js 承担一部分后端开发的工作。目前还没有明确的研究方向，但对于全栈开发颇感兴趣。我熟悉
+    React 以及周边生态，使用 nest.js 开发我的全栈项目，正在学习 Vue 与 Golang，希望能够每日进步。
+    <br />
   </p>
+
   <BlockTitle title="博客" backgroundText="Blogs" />
   {
     Object.entries(postCollects)
@@ -42,5 +48,12 @@ const pageTitle = 'AqingCyan'
     font-size: 1rem;
     line-height: 2.5rem;
     color: var(--primary-color);
+  }
+
+  @media screen and (max-width: 500px) {
+    .about-me {
+      margin-bottom: 2rem;
+      line-height: 2.2rem;
+    }
   }
 </style>

@@ -1,6 +1,6 @@
 ---
-import lightMode from '../images/light.svg'
-import darkMode from '../images/dark.svg'
+import LineMdSunRisingTwotoneLoop from '~icons/line-md/sun-rising-twotone-loop'
+import LineMdSunnyFilledLoopToMoonFilledLoopTransition from '~icons/line-md/sunny-filled-loop-to-moon-filled-loop-transition'
 ---
 
 <div class="nav-links">
@@ -8,8 +8,8 @@ import darkMode from '../images/dark.svg'
   <a href="/weekly">周记<em>!</em>WEEK</a>
   <a href="/tags">标签<em>!</em>TAGS</a>
 
-  <img class="mode-icon" id="themeToggleOne" src={lightMode} alt="lightMode" />
-  <img class="mode-icon" id="themeToggleTwo" src={darkMode} alt="darkMode" />
+  <LineMdSunRisingTwotoneLoop class="mode-icon" id="themeToggleOne" />
+  <LineMdSunnyFilledLoopToMoonFilledLoopTransition class="mode-icon" id="themeToggleTwo" />
 </div>
 
 <style>
@@ -36,6 +36,7 @@ import darkMode from '../images/dark.svg'
     height: 1.687rem;
     margin-right: 2rem;
     cursor: pointer;
+    color: var(--theme-color);
   }
 
   #themeToggleOne {
