@@ -1,15 +1,24 @@
 ---
 import LineMdSunRisingTwotoneLoop from '~icons/line-md/sun-rising-twotone-loop'
+import IconParkSolidError from '~icons/icon-park-solid/error'
 import LineMdSunnyFilledLoopToMoonFilledLoopTransition from '~icons/line-md/sunny-filled-loop-to-moon-filled-loop-transition'
+import FxemojiHamburger from '~icons/fxemoji/hamburger'
+import logoImg from '../images/logo.png'
 ---
 
 <div class="nav-links">
+  <img class="nav-logo" src={logoImg} alt="logoImg" id="logo" />
+
   <a href="/">首页<em>!</em>HOME</a>
   <a href="/weekly">周记<em>!</em>WEEK</a>
   <a href="/tags">标签<em>!</em>TAGS</a>
 
-  <LineMdSunRisingTwotoneLoop class="mode-icon" id="themeToggleOne" />
-  <LineMdSunnyFilledLoopToMoonFilledLoopTransition class="mode-icon" id="themeToggleTwo" />
+  <div class="hamburger-box">
+    <FxemojiHamburger class="hamburger" id="openHamburger" />
+    <IconParkSolidError class="hamburger" id="closeHamburger" />
+    <LineMdSunRisingTwotoneLoop class="mode-icon" id="themeToggleOne" />
+    <LineMdSunnyFilledLoopToMoonFilledLoopTransition class="mode-icon" id="themeToggleTwo" />
+  </div>
 </div>
 
 <style>
@@ -19,6 +28,13 @@ import LineMdSunnyFilledLoopToMoonFilledLoopTransition from '~icons/line-md/sunn
     height: 100%;
     font-size: 1rem;
     line-height: 1.2rem;
+  }
+
+  .nav-links .nav-logo {
+    display: none;
+    width: 3.5rem;
+    height: 3.5rem;
+    cursor: pointer;
   }
 
   .nav-links a {
@@ -32,8 +48,8 @@ import LineMdSunnyFilledLoopToMoonFilledLoopTransition from '~icons/line-md/sunn
   }
 
   .nav-links .mode-icon {
-    width: 1.687rem;
-    height: 1.687rem;
+    width: 2rem;
+    height: 2rem;
     margin-right: 2rem;
     cursor: pointer;
     color: var(--theme-color);
@@ -47,9 +63,42 @@ import LineMdSunnyFilledLoopToMoonFilledLoopTransition from '~icons/line-md/sunn
     display: none;
   }
 
+  .hamburger-box {
+    display: flex;
+    align-items: center;
+  }
+
+  .hamburger-box .hamburger {
+    display: none;
+    margin-right: 1rem;
+    font-size: 1.687rem;
+    cursor: pointer;
+    color: var(--theme-color);
+  }
+
+  @media screen and (max-width: 900px) {
+    .nav-links {
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 1.8rem;
+    }
+
+    .nav-links .nav-logo {
+      display: block;
+    }
+
+    .nav-links .mode-icon {
+      margin-right: 0;
+    }
+  }
+
   @media screen and (max-width: 790px) {
     .nav-links a {
       display: none;
+    }
+
+    .hamburger-box #openHamburger {
+      display: block;
     }
   }
 </style>
@@ -94,5 +143,25 @@ import LineMdSunnyFilledLoopToMoonFilledLoopTransition from '~icons/line-md/sunn
     handleToggleClick()
     document.getElementById('themeToggleOne').style.display = 'block'
     document.getElementById('themeToggleTwo').style.display = 'none'
+  })
+
+  window.addEventListener('resize', () => {
+    if (document.body.clientWidth > 790) {
+      document.getElementById('closeHamburger').style.display = 'none'
+      document.getElementById('openHamburger').style.display = 'none'
+    } else {
+      if (document.getElementById('closeHamburger').style.display === 'none') {
+        document.getElementById('openHamburger').style.display = 'block'
+      }
+    }
+  })
+
+  document.getElementById('closeHamburger').addEventListener('click', () => {
+    document.getElementById('closeHamburger').style.display = 'none'
+    document.getElementById('openHamburger').style.display = 'block'
+  })
+  document.getElementById('openHamburger').addEventListener('click', () => {
+    document.getElementById('openHamburger').style.display = 'none'
+    document.getElementById('closeHamburger').style.display = 'block'
   })
 </script>
