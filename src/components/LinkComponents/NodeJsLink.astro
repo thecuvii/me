@@ -1,0 +1,12 @@
+---
+import LogosNodejsIcon from '~icons/logos/nodejs-icon'
+
+import './link.css'
+
+const { text, href } = Astro.props
+---
+
+<a class="icon-a" href={href}>
+  <LogosNodejsIcon class="icon" style="font-size: 0.8rem;" />
+  {text}
+</a>

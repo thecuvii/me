@@ -1,0 +1,12 @@
+---
+import SkillIconsReactDark from '~icons/skill-icons/react-dark'
+
+import './link.css'
+
+const { text, href } = Astro.props
+---
+
+<a class="icon-a" href={href}>
+  <SkillIconsReactDark class="icon" style="font-size: 0.8rem;" />
+  {text}
+</a>

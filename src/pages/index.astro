@@ -3,8 +3,15 @@ import dayjs from 'dayjs'
 import BaseLayout from '../layouts/BaseLayout.astro'
 import BlockTitle from '../components/BlockTitle.astro'
 import YearBlogList from '../components/YearBlogList.astro'
-import Social from '../components/Social.astro'
 import EmailLink from '../components/LinkComponents/EmailLink.astro'
+import ReactLink from '../components/LinkComponents/ReactLink.astro'
+import NestJsLink from '../components/LinkComponents/NestJsLink.astro'
+import VueLink from '../components/LinkComponents/VueLink.astro'
+import NodeJsLink from '../components/LinkComponents/NodeJsLink.astro'
+import GolangLink from '../components/LinkComponents/GolangLink.astro'
+import TwitterLink from '../components/LinkComponents/TwitterLink.astro'
+import GithubLink from '../components/LinkComponents/GithubLink.astro'
+import AstroLink from '../components/LinkComponents/AstroLink.astro'
 
 const allPosts = await Astro.glob('../pages/posts/*.{md,mdx}')
 const allWeeks = await Astro.glob('../pages/weekly/*.{md,mdx}')
@@ -25,13 +32,23 @@ const pageTitle = 'AqingCyan'
 
 <BaseLayout pageTitle={pageTitle}>
   <BlockTitle title="关于我" backgroundText="AqingCyan" />
-  <Social />
+
   <p class="about-me">
     Hi! 我是 AqingCyan 👋
     <br />
-    是前端开发工程师，目前就职于网易，负责升学业务的开发，也使用 node.js 承担一部分后端开发的工作。目前还没有明确的研究方向，但对于全栈开发颇感兴趣。我熟悉
-    React 以及周边生态，使用 nest.js 开发我的全栈项目，正在学习 Vue 与 Golang，希望能够每日进步。
+    是前端开发工程师，目前就职于网易，负责升学业务的开发，也使用
+    <NodeJsLink text="node.js" href="/tags/node.js" /> 承担一部分后端开发的工作。目前还没有明确的研究方向，但对于全栈开发颇感兴趣。我熟悉
+    <ReactLink text="React" href="/tags/react.js" /> 以及周边生态，使用
+    <NestJsLink text="Nest" href="/tags/nest.js" /> 开发我的全栈项目，正在学习
+    <VueLink text="Vue" href="/tags/vue" /> 与
+    <GolangLink text="Golang" href="/tags/golang" />，希望能够使用它们做出有意思的成果。
     <br />
+    你可以通过：
+    <EmailLink text="我的邮箱" href="mailto:AqingCyan@gmail.com" />、
+    <TwitterLink text="推特" href="https://twitter.com/purexitong0101" />、
+    <GithubLink text="Github" href="https://github.com/aqingcyan" />
+    来与我取得联系。本博客是由我自己主导设计并基于 <AstroLink text="Astro" href="https://astro.build/" /> 开发，如果你喜欢此博客模板，可以
+    Fork 本仓库进行二次改造。感谢你读到此处！
   </p>
 
   <BlockTitle title="博客" backgroundText="Blogs" />

@@ -1,0 +1,12 @@
+---
+import VscodeIconsFileTypeGoGopher from '~icons/vscode-icons/file-type-go-gopher'
+
+import './link.css'
+
+const { text, href } = Astro.props
+---
+
+<a class="icon-a" href={href}>
+  <VscodeIconsFileTypeGoGopher class="icon" style="font-size: 0.85rem;" />
+  {text}
+</a>

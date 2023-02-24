@@ -1,0 +1,12 @@
+---
+import VscodeIconsFileTypeAstro from '~icons/vscode-icons/file-type-astro'
+
+import './link.css'
+
+const { text, href } = Astro.props
+---
+
+<a class="icon-a" href={href}>
+  <VscodeIconsFileTypeAstro class="icon" style="font-size: 0.8rem;" />
+  {text}
+</a>
