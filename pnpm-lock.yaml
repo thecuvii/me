@@ -4,7 +4,6 @@ specifiers:
   '@astrojs/mdx': ^0.17.2
   '@astrojs/react': ^2.0.2
   '@astrojs/rss': ^2.1.0
-  '@iconify-json/skill-icons': ^1.1.2
   '@iconify/json': ^2.2.27
   '@types/react': ^18.0.21
   '@types/react-dom': ^18.0.6
@@ -22,7 +21,6 @@ dependencies:
   '@astrojs/mdx': 0.17.2_astro@2.0.2
   '@astrojs/react': 2.0.2_fxtgt6bjwd6p4cwoordejim2zi
   '@astrojs/rss': 2.1.0
-  '@iconify-json/skill-icons': 1.1.2
   '@types/react': 18.0.27
   '@types/react-dom': 18.0.10
   astro: 2.0.2
@@ -634,12 +632,6 @@ packages:
     dev: false
     optional: true
 
-  /@iconify-json/skill-icons/1.1.2:
-    resolution: {integrity: sha512-USuBvlGoOryx7EPCNGqJ2PohbNHRJ4wTl7druaarQglhiYYOw8B6UoDZhWWu6+xIy4vieRpmyYO7HVd6dI30Dg==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: false
-
   /@iconify/json/2.2.27:
     resolution: {integrity: sha512-8Fqx7iP9XOBOJY20HtFeqAJ90Tr0/RX7rb9wqhEHBEdF4vX6H/riWXlGUXTWsB04h8FbJ3Lgs0sTMAKDUzPtPA==}
     dependencies:
@@ -649,6 +641,7 @@ packages:
 
   /@iconify/types/2.0.0:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
+    dev: true
 
   /@iconify/utils/2.1.4:
     resolution: {integrity: sha512-7vzsYIvxv5Hng0MNEtSSnyMBD/+zqnORqmKiYsSgpMBGSz1r93URgBZHPYCZ1/gpoaVstYW4/SVLGCMJBNMCLQ==}
