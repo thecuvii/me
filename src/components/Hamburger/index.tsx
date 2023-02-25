@@ -1,5 +1,6 @@
 import React from 'react'
-import { useWindowSize, useLockedBody } from 'usehooks-ts'
+import useWindowSize from '../../hooks/useWindowSize'
+import useLockedBody from '../../hooks/useLockedBody'
 import FxemojiHamburger from './FxemojiHamburger'
 import Close from './Close'
 import './index.css'

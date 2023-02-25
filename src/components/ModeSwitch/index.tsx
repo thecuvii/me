@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useDarkMode } from 'usehooks-ts'
+import useDarkMode from '../../hooks/useDarkMode'
 import Sun from './Sun'
 import Moon from './Moon'
 import './index.css'
