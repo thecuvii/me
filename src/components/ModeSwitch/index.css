@@ -1,0 +1,7 @@
+.mode-icon {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 2rem;
+  cursor: pointer;
+  color: var(--theme-color);
+}
