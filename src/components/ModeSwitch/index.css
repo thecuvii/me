@@ -1,7 +1,18 @@
+.mode-switch {
+  display: flex;
+  align-items: center;
+}
+
 .mode-icon {
   width: 2rem;
   height: 2rem;
   margin-right: 2rem;
   cursor: pointer;
   color: var(--theme-color);
+}
+
+@media screen and (max-width: 790px) {
+  .mode-icon {
+    margin-right: 0;
+  }
 }

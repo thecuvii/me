@@ -23,7 +23,7 @@ const ModeSwitch: React.FC = () => {
   }
 
   return (
-    <div onClick={() => toggleMode()}>
+    <div className="mode-switch" onClick={() => toggleMode()}>
       {isDarkMode ? <Sun className="mode-icon" /> : <Moon className="mode-icon" />}
     </div>
   )
