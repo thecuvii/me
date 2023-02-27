@@ -6,7 +6,6 @@ import Close from './Close'
 import './index.css'
 
 const Hamburger: React.FC = () => {
-  const { width } = useWindowSize()
   const [locked, setLocked] = useLockedBody(false, 'root')
 
   return (

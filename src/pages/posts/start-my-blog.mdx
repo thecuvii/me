@@ -7,6 +7,11 @@ author: 'AqingCyan'
 tags: ['astro', 'record', 'non-technology']
 ---
 
+import CharmMenuHamburger from '~icons/charm/menu-hamburger'
+import ModeSwitch from '../../components/ModeSwitch'
+import GithubLink from '../../components/LinkComponents/GithubLink.astro'
+import AstroLink from '../../components/LinkComponents/AstroLink.astro'
+
 本文是本次博客构建过程的流水账，并没有技术讨论在其中。我想以后与技术无关的文章都打一个叫做 [#non-technology](/tags/non-technology) 的标签好了～
 
 ## 心路历程
@@ -85,8 +90,252 @@ export default defineConfig({
 
 ![image.png](https://s2.loli.net/2023/02/27/ZizyGfAwsaVlbgh.png)
 
-#### 细节的地方
+#### 图标链接
 
-在首页是能看到不少带有图标的链接的，图标作为一个信息，在阅读的时候能帮助一下子分辨链接的类型或者与之强相关的信息，这是我的一点巧思。那如何实现这个部分呢？我一开始想的很简单
+在这个网站中能看到不少带有图标的链接，我想图标作为一个信息，在阅读的时候能帮助分辨链接的类型或者引导你想到相关的信息，并且颜色各异的图标是有一定的点缀效果，比较素的网站能有细节的体现，这是我的一点巧思。那如何实现这个部分呢？
 
-## 问题还有不少
+我一开始想的很简单，直接去寻找图标素材，然后编写很多特别定制的 Link ，代码如下：
+
+```astro
+---
+import logo from '../icons/logo.svg'
+
+const { text, link } = Astro.props
+---
+
+<a href={link}>
+  <img src={logo} alt="logo-icon" />
+  {text}
+</a>
+
+<style>
+  ...
+</style>
+```
+
+本身不是什么有门槛的事情，但是图标资源本身是一件很麻烦的事情，我需要一个一个去找，再一个一个下载，然后一个一个导入。特别定制的链接在不多的时候还好，多了以后就很烦人了。
+
+这么想过来，那我会想到找一个 icons 库来解决资源的问题，但是图标种类很多，有没有那种有丰富资源的那种库？有！还真有！我在 Anthony Fu 的众多发明中有留意到这个项目 <GithubLink text="Icônes" href="https://github.com/antfu/icones" />，它本身基于 [iconify](https://iconify.design/)，拥有 100 多个流行图标集的超 10,000 多个图标。关于这个项目有很多值得学习的地方，高楼并不是一天建成的，如果你想了解更多关于其构建的想法，可以按以下的顺序阅读他的博文：
+
+- 2020 年 8 月 - [Journey with Icons](https://antfu.me/posts/journey-with-icons)
+- 2021 年 9 月 - [Journey with Icons Continues](https://antfu.me/posts/journey-with-icons-continues)
+- 2021 年 10 月 - [Reimagine Atomic CSS](https://antfu.me/posts/reimagine-atomic-css)
+- 2021 年 11 月 - [Icons in Pure CSS](https://antfu.me/posts/icons-in-pure-css)
+
+总而言之，除了它本身有丰富的图表集，它还支持你使用 css 修改图标的样式（本身带有颜色的图标不会被改掉颜色），它还有完整的图标工具链 -- 不管你是何种方式使用它，它都提供了对应的方式：
+
+![image.png](https://s2.loli.net/2023/02/28/AUnOSfah4XwybjW.png)
+
+不过我最推荐以 <GithubLink text="unplugin-icons" href="https://github.com/antfu/unplugin-icons" /> 的方式使用它们，这个工具是 Icônes 配套的工具，让你轻松地在任意框架中按需集成图标，并提供给你最大的自由度去修改它们（以组件的维度），Astro 当然也不例外
+
+```shell
+pnpm add -D unplugin-icons
+```
+
+接着安装图标集，如果你想使用所有的图标，就安装全部
+
+```shell
+pnpm add -D @iconify/json
+```
+
+如果您只想使用几个图标集而不想下载整个集合，您也可以使用@iconify-json/[collection-id]. 例如，要安装 Material Design Icons，您可以执行以下操作：
+
+```shell
+npm i -D @iconify-json/mdi
+```
+
+Astro 做简单配置
+
+```js
+// astro.config.mjs
+import { defineConfig } from 'astro/config'
+import Icons from 'unplugin-icons/vite'
+export default defineConfig({
+  vite: {
+    plugins: [
+      Icons({
+        compiler: 'astro',
+      }),
+    ],
+  },
+})
+```
+
+记得把类型处理一下～
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "types": ["unplugin-icons/types/astro"]
+  }
+}
+```
+
+现在我们写一个特别的 Link 只需要
+
+```astro
+---
+import VscodeIconsFileTypeAstro from '~icons/vscode-icons/file-type-astro'
+
+import './link.css'
+
+const { text, href } = Astro.props
+---
+
+<a class="icon-a" href={href}>
+  <VscodeIconsFileTypeAstro class="icon" style="font-size: 0.8rem;" />
+  {text}
+</a>
+```
+
+导入的样式是 link 中的 icon 的通用样式，由于一些图标本身在同一尺寸下占的比例很大，给其设置一个较小的 `font-size` 看起来更和谐。于是就得到了：<AstroLink text="link demo" href="https://astro.build" />。
+
+> 如你所见，这个网站中用的所有图标都来自于 Icônes ，并通过 unplugin-icons 使用。
+
+#### 憨八嘎 🍔
+
+在做响应式处理的时候，按照常规处理，顶部菜单在宽度被挤压的放不下的时候，就会被隐藏，转而只剩一个按钮（长这样 <CharmMenuHamburger style="font-size: 0.9rem;margin-bottom: -0.2rem" />），点击后展开一个菜单列表。
+
+我从来没想过这个按钮叫什么名字，但是我需要它的图标做这个按钮，经过搜查后，得知它专业术语叫 hamburger ，就是汉堡，觉得还蛮有意思的，也觉得很形象。于是当你用手机打开这个网站的时候，可以看到一个形象的憨八嘎！
+
+![image.png](https://s2.loli.net/2023/02/28/I9q4vDcn3epWo5M.png)
+
+在开发汉堡展开后的组件的时候，遇到了一个问题：菜单列表虽然盖住了整个页面，但若页面的内容很长，是能把页面划上去的，很尴尬！
+
+![image.png](https://s2.loli.net/2023/02/28/cQFTClzJ3mfwIbV.png)
+
+当然，解决的办法很简单，只要菜单列表是展开状态，就将 `<body />` 置为 `overflow: hidden` ，没有越出的部分就无法滚动了。那么就是在组件中维护一个是否打开 hamburger 的 state ，`useEffect` 依赖它的变化来处理是否给 `<body />` 做处理。但这样的逻辑写起来需要处理一些额外的情况，其实还是有些繁琐，恰好我找到了一个 React hook：
+
+```ts
+import { useEffect, useState } from 'react'
+import useIsomorphicLayoutEffect from './useIsomorphicLayoutEffect'
+
+type UseLockedBodyOutput = [boolean, (locked: boolean) => void]
+
+function useLockedBody(
+  initialLocked = false,
+  rootId = '___gatsby', // Default to `___gatsby` to not introduce breaking change
+): UseLockedBodyOutput {
+  const [locked, setLocked] = useState(initialLocked)
+
+  // Do the side effect before render
+  useIsomorphicLayoutEffect(() => {
+    if (!locked) {
+      return
+    }
+
+    // Save initial body style
+    const originalOverflow = document.body.style.overflow
+    const originalPaddingRight = document.body.style.paddingRight
+
+    // Lock body scroll
+    document.body.style.overflow = 'hidden'
+
+    // Get the scrollBar width
+    const root = document.getElementById(rootId) // or root
+    const scrollBarWidth = root ? root.offsetWidth - root.scrollWidth : 0
+
+    // Avoid width reflow
+    if (scrollBarWidth) {
+      document.body.style.paddingRight = `${scrollBarWidth}px`
+    }
+
+    return () => {
+      document.body.style.overflow = originalOverflow
+
+      if (scrollBarWidth) {
+        document.body.style.paddingRight = originalPaddingRight
+      }
+    }
+  }, [locked])
+
+  // Update state if initialValue changes
+  useEffect(() => {
+    if (locked !== initialLocked) {
+      setLocked(initialLocked)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialLocked])
+
+  return [locked, setLocked]
+}
+
+export default useLockedBody
+```
+
+用起来也很简单，它能直接给一个是否锁定的 state 和设置锁定的 setState
+
+```ts
+const [locked, setLocked] = useLockedBody(false, 'root')
+```
+
+#### Dark mode
+
+现代网站拥有黑暗模式已经是标配，文字阅读类网站更是不能缺少这一特点，处理真的很简单，依靠 CSS 变量即可
+
+light mode
+
+```css
+body {
+  --background-color: #ffffff;
+  --link-color: #838383;
+  --block-title-color: #222222;
+  --block-background-color: #f4f4f4;
+  --theme-color: #ff914d;
+  --line-color: #d8d8d8;
+  --primary-color: #222222;
+  --second-color: #838383;
+  --third-color: #5d5d5d;
+  --blockquote-color: #909090;
+  --toc-color: #606060;
+}
+```
+
+dark mode
+
+```css
+.dark body {
+  --background-color: #252525;
+  --block-title-color: #ffffff;
+  --block-background-color: #3f3f3f;
+  --primary-color: #ffffff;
+  --blockquote-color: #9b9b9b;
+  --toc-color: #bcbcbc;
+}
+```
+
+当切换到对应的模式的时候，修改根元素的 `class` 即可
+
+```ts
+const { isDarkMode, toggle } = useDarkMode()
+
+const handleBodyDark = () => {
+  if (isDarkMode) {
+    document.documentElement.classList.remove('dark')
+  } else {
+    document.documentElement.classList.add('dark')
+  }
+}
+
+useEffect(handleBodyDark, [isDarkMode])
+```
+
+`useDarkMode` 是一个 hook，提供给你当前是什么模式，模式的默认值是：首先查看之前 `localStroage` 中缓存是什么模式，没有缓存则媒体查询当前设备的颜色模式，后面的切换就都会将模式缓存起来。具体的实现可以查看源码，或者去 <GithubLink text="usehooks-ts" href="https://usehooks-ts.com/" /> 查看即可，点击下面的按钮试试 👇：
+
+<ModeSwitch client:load />
+
+## 未完待续
+
+目前博客是可看的了，但仍然存在很多问题和待实现的功能，慢慢完成吧：
+
+- 标签页面重新设计并开发。
+- 文章页面支持数学公式展示。
+- 文章页面的表格还未完成样式设计。
+- 图片可以点击查看大图。
+- twitter 预览组件封装，支持模式切换。
+- 将图片上传到一个公有云下。
+- 支持分享到朋友圈等功能。
+- ...
+
+感谢你读至此处！ [cd ..](/)
