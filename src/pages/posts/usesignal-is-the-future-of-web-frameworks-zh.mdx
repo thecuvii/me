@@ -21,16 +21,18 @@ useState() => value + setter
 useSignals() => getter + setter
 ```
 
-Signals 和 State 之间的主要区别在于 Signals 返回一个 _getter_ 和一个 _setter_ ，而非响应式系统返回其值（和一个 _setter_ ）。_注意: 有些响应式系统一起返回 getter/setter，有些则作为两个独立的引用，但其思想是相同的。_
+Signals 和 State 之间的主要区别在于 Signals 返回一个 _getter_ 和一个 _setter_ ，而**非响应式系统**返回其值（和一个 _setter_ ）。
+
+> 注意: 有些响应式系统一起返回 getter/setter，有些则作为两个独立的引用，但其思想是相同的。
 
 ### State vs. State
 
-问题是 _State_ 这个单词混淆了两个不同的概念。
+本质问题：是 _State_ 这个单词混淆了两个不同的概念。
 
 - **StateReference**： _reference_ 是指状态的引用（译者注：我理解是 _state_ 的指针）。
 - **StateValue**：这是存放在在状态引用 或 存储中的实际的 _value_。
 
-为什么返回 _getter_ 比返回其值要有优势？因为通过返回 _getter_ ，你可以将**状态引用**的传递与**状态值**的读取分离开来。
+为什么返回 _getter_ 比返回其值更有优势？因为通过返回 _getter_ ，你可以将**状态引用**的传递与**状态值**的读取分离开来。
 
 让我们以一段 SolidJS 代码为例：
 
@@ -287,7 +289,7 @@ export function Cart({ cart }: any) {
 
 ## 结论
 
-Signals 是在应用程序中存储状态的一种方式，类似于 React 中的 `useState()`。然而，最关键的区别在于，Signals 返回的是 _getter_ 和 _setter_ ，而非响应式系统只返回其 _value_ 和 _setter_ 。
+Signals 是在应用程序中存储状态的一种方式，类似于 React 中的 `useState()`。然而，最关键的区别在于，Signals 返回的是 _getter_ 和 _setter_ ，而**非响应式系统**只返回其 _value_ 和 _setter_ 。
 
 这很这点恰恰很重要，因为 Signals 是响应式的，这意味着它们需要追踪对状态感兴趣的用户，并将状态更改通知订阅者。这是通过观察调用 _state-getter_ 的上下文来实现的，它创建了一个订阅。
 
