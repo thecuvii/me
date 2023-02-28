@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import useDarkMode from '../../hooks/useDarkMode'
 import Sun from './Sun'
 import Moon from './Moon'
@@ -6,6 +6,7 @@ import './index.css'
 
 const ModeSwitch: React.FC = () => {
   const { isDarkMode, toggle } = useDarkMode()
+  const [showDom, setShowDom] = useState<boolean>(false)
 
   const handleBodyDark = () => {
     if (isDarkMode) {
@@ -15,6 +16,7 @@ const ModeSwitch: React.FC = () => {
     }
   }
 
+  useEffect(() => setShowDom(true), [])
   useEffect(handleBodyDark, [isDarkMode])
 
   const toggleMode = () => {
@@ -22,11 +24,11 @@ const ModeSwitch: React.FC = () => {
     toggle()
   }
 
-  return (
+  return showDom ? (
     <div className="mode-switch" onClick={() => toggleMode()}>
       {isDarkMode ? <Sun className="mode-icon" /> : <Moon className="mode-icon" />}
     </div>
-  )
+  ) : null
 }
 
 export default ModeSwitch
