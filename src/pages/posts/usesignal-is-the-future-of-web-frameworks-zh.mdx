@@ -291,7 +291,7 @@ export function Cart({ cart }: any) {
 
 Signals 是在应用程序中存储状态的一种方式，类似于 React 中的 `useState()`。然而，最关键的区别在于，Signals 返回的是 _getter_ 和 _setter_ ，而**非响应式系统**只返回其 _value_ 和 _setter_ 。
 
-这很这点恰恰很重要，因为 Signals 是响应式的，这意味着它们需要追踪对状态感兴趣的用户，并将状态更改通知订阅者。这是通过观察调用 _state-getter_ 的上下文来实现的，它创建了一个订阅。
+这点恰恰很重要，因为 Signals 是响应式的，这意味着它们需要追踪对状态感兴趣的用户，并将状态更改通知订阅者。这是通过观察调用 _state-getter_ 的上下文来实现的，它创建了一个订阅。
 
 相反，React 中的 `useState()` 只返回 _state-value_ ，这意味着它不知道组件如何使用它的 _state-value_ ，所以必须重新呈现整个组件树以响应状态的更改。
 
