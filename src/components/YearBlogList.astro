@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import BlogBlockTitle from './BlogBlockTitle.astro'
 
 const { thisYearList, year } = Astro.props
+thisYearList.sort((one, two) => dayjs(two.frontmatter.pubDate).valueOf() - dayjs(one.frontmatter.pubDate).valueOf())
 ---
 
 <div>

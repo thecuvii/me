@@ -3,7 +3,8 @@ import dayjs from 'dayjs'
 import BaseLayout from './BaseLayout.astro'
 import '../styles/markdown.style.css'
 
-const { frontmatter, headings, url } = Astro.props
+const { frontmatter, headings } = Astro.props
+const image = frontmatter.image || 'https://aqingcyan.me/favicon.png'
 ---
 
 <head>
@@ -11,7 +12,7 @@ const { frontmatter, headings, url } = Astro.props
   <meta name="twitter:description" content={frontmatter.description} />
   <meta name="twitter:creator" content="@purexitong0101" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://aqingcyan.me/favicon.png" />
+  <meta name="twitter:image" content={image} />
 </head>
 <BaseLayout pageTitle={frontmatter.title}>
   <h1 class="blog-title">{frontmatter.title}</h1>

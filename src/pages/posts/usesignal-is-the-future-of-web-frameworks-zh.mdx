@@ -1,0 +1,190 @@
+---
+layout: ../../layouts/MarkdownPostLayout.astro
+title: 'useSignal() 是 Web 框架的未来'
+pubDate: 2023-02-28
+description: '[翻译] Signals 是一种存储应用程序状态的方式，类似于 React 中的 useState()。但有一些关键差异使 Signals 更具优势。'
+author: 'WRITTEN BY MIŠKO HEVERY'
+tags: ['translate', 'signal']
+image: 'https://s2.loli.net/2023/02/28/g6xr8W1aotyjfFL.png'
+---
+
+> 本文为一篇翻译，你可以点此访问原文：[useSignal() is the Future of Web Frameworks](https://www.builder.io/blog/usesignal-is-the-future-of-web-frameworks)
+
+![image.png](https://s2.loli.net/2023/02/28/g6xr8W1aotyjfFL.png)
+
+Signals 是一种存储应用程序状态的方式，类似于 React 的 `useState()`。但是，有一些关键的差异使 Signals 更具优势。
+
+## 什么是信号
+
+```ts
+useState() => value + setter
+useSignals() => getter + setter
+```
+
+Signals 和 State 之间的主要区别在于 Signals 返回一个 getter 和一个 setter，而非响应式系统返回值（和一个 setter）。_注意: 有些反应式系统一起返回 getter/setter，有些则作为两个独立的引用，但其思想是相同的。_
+
+### State vs. State
+
+问题是 _State_ 这个单词混淆了两个不同的概念。
+
+- **StateReference**： _reference_ 是指状态的引用（译者注：我理解是 _state_ 的指针）。
+- **StateValue**：这是存放在在状态引用 或 存储中的实际的 _value_。
+
+为什么返回 getter 比返回其值要有优势？因为通过返回 getter，你可以将**状态引用**的传递与**状态值**的读取分离开来。
+
+让我们以一段 SolidJS 代码为例：
+
+```tsx
+export function Counter() {
+  const [getCount, setCount] = createSignal(0)
+
+  return <button onClick={() => setCount(getCount() + 1)}>{getCount()}</button>
+}
+```
+
+- `createSignal()`：分配 `StateStorage` 并将其初始化为 `0`。
+- `getCount`：store 的引用，你可以传递它。
+- `getCount()`：是你通过引用获取到的状态中的值。
+
+## 我没懂！我看起来觉得一样啊
+
+上面解释了 _Signals_ 与旧的 _State_ 的不同，但没有解释为什么我们应该关注这一差异。
+
+Signals 若是可响应的！就意味着它们会追踪对状态感兴趣的（订阅）人，如果状态发生了变化，就通知订阅者状态发生了变化。
+
+要具有响应性，Signals 必须收集谁对 Signals 的值感兴趣（订阅）。他们通过观察在哪些上下文中调用 _state-getter_ 来获得这些信息。通过从 getter 获取值的行为，可以告诉 Signals 这个地方对其值感兴趣。如果值发生更改，则需要使该位置发生重新计算。换句话说，调用 _getter_ 将创建订阅。
+
+这就是为什么传递 _state-getter_ 而不是 _state-value_ 非常重要的原因。状态值的传递不会向 Signals 提供关于实际使用该值的地方的任何信息。这就是为什么区分状态 **reference** 和状态 **value** 在 Signals 中如此重要。
+
+相比之下，[Qwik](https://qwik.builder.io/) 也有同样的例子。注意！（getter/setter）已被替换为单个对象的 `.value` 属性（其实就是 getter/setter）。虽然语法不同，但内部工作原理是相同的。
+
+```tsx
+export function Counter() {
+  const count = useSignal(0)
+
+  return <button onClick$={() => count.value++}>{count.value}</button>
+}
+```
+
+重要的是，当单击按钮并累加值时，框架只需要将文本节点从`0`更新到`1`。之所以可以这样做，是因为在模板的初始化渲染期间，Signal 已经了解到只有文本节点才能访问 `count.value` 。因此，它知道如果 `count` 的值发生变化，它只需要更新文本节点，而不需要更新其他内容。
+
+## `useState()` 的缺点
+
+现在让我们看看 React 是如何使用 `useState()` 的，并看看它的缺点：
+
+```tsx
+export function Counter() {
+  const [count, setCount] = useState(0)
+
+  return <button onClick={() => setCount(count + 1)}>{count}</button>
+}
+```
+
+React 的 `useState()` 返回的是 _state-value_ 。这意味着 `useState()` 不知道 _state-value_ 在组件或应用程序中被如何使用。这也就意味着：一旦你通过 `setState()` 通知 React 进行状态更改，React 并不知道页面的哪个部分已经更改，因此必须重新渲染整个组件。这是一种昂贵的计算消耗。
+
+## `useRef()` 不进行渲染
+
+`useRef()` 的使用方式和 `useSignal()` 很像，用于传递对状态的引用（_reference_），而非状态本身。可 `useRef()` 缺少的是订阅追踪与通知。
+
+幸好，在基于 Signals 的框架中，`usessignal()` 和 `useRef()` 是相同的东西。`useSignal()` 不仅可以完成 `useRef()` 所做的工作，还可以进行订阅追踪。这进一步简化了框架的 API 设计。
+
+## `useMemo()` 是内置的
+
+Signals 很少有需要使用缓存的情况，因为它开箱即用，对此没有什么工作量！
+
+请思考这两个计数器和其两个字组件的示例：
+
+```tsx
+export function Counter() {
+  console.log('<Counter />')
+  const countA = useSignal(0)
+  const countB = useSignal(0)
+
+  return (
+    <div>
+      <button onClick$={() => countA.value++}>A</button>
+      <button onClick$={() => countB.value++}>B</button>
+      <Display count={countA.value} />
+      <Display count={countB.value} />
+    </div>
+  )
+}
+
+export const Display = component$(({ count }: { count: number }) => {
+  console.log(`<Display count={${count}} />`)
+  return <div>{count}!</div>
+})
+```
+
+在上面的示例中，只有两个 `Display` 组件中的一个文本节点会被更新。没有得到更新的文本节点在首次渲染后将永远不会打印。
+
+```shell
+# Initial render output
+<Counter/>
+<Display count={0}/>
+<Display count={0}/>
+
+# Subsequent render on click
+(blank...)
+```
+
+而你完全无法通过 React 实现同样的效果，因为至少会有一个组件需要重新渲染。所以，让我们看看如何在 React 中缓存组件以做到最少次的重渲染。
+
+```tsx
+export default function Counter() {
+  console.log('<Counter />')
+  const [countA, setCountA] = useState(0)
+  const [countB, setCountB] = useState(0)
+
+  return (
+    <div>
+      <button onClick={() => setCountA(countA + 1)}>A</button>
+      <button onClick={() => setCountB(countB + 1)}>B</button>
+      <Display count={countA} />
+      <Display count={countB} />
+    </div>
+  )
+}
+
+export const MemoDisplay = memo(Display)
+
+export function Display({ count }: { count: number }) {
+  console.log(`<Display count={${count}} />`)
+  return <div>{count}!</div>
+}
+```
+
+但就算是使用了缓存的方式，React 还是会执行多次重渲染：
+
+```shell
+# Initial render output
+<Counter/>
+<Display count={0}/>
+<Display count={0}/>
+
+# Subsequent render on click
+<Counter/>
+<Display count={1}/>
+```
+
+如果我们没有用 `memo` 来处理，那我们可以看到 log：
+
+```shell
+# Initial render output
+<Counter/>
+<Display count={0}/>
+<Display count={0}/>
+
+# Subsequent render on click
+<Counter/>
+<Display count={1}/>
+<Display count={0}/>
+```
+
+这就比使用 Signals 要做的工作多得多。所以，这就是为什么 Signals 的作用就好像你记住了所有东西，而实际上你自己不需要记住任何东西。
+
+## Props 透传
+
+让我们看一个 React 的购物车示例：
+
+> 还在进行中 😭

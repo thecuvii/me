@@ -133,10 +133,32 @@
   font-weight: bold;
 }
 
+.article h1 code,
+.article h2 code,
+.article h3 code,
+.article h4 code,
+.article h5 code,
+.article h6 code {
+  font-size: unset;
+  font-weight: bold;
+}
+
 .article p code::before,
 .article li code::before,
+.article h1 code::before,
+.article h2 code::before,
+.article h3 code::before,
+.article h4 code::before,
+.article h5 code::before,
+.article h6 code::before,
 .article p code::after,
-.article li code::after {
+.article li code::after,
+.article h1 code::after,
+.article h2 code::after,
+.article h3 code::after,
+.article h4 code::after,
+.article h5 code::after,
+.article h6 code::after {
   content: '`';
 }
 
