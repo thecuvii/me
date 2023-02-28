@@ -53,7 +53,7 @@ const pageTitle = 'AqingCyan'
   <BlockTitle title="博客" backgroundText="Blogs" />
   {
     Object.entries(postCollects)
-      .sort((postOne, postTwo) => parseInt(postTwo[0]) - parseInt(postOne[0]))
+      .reverse()
       .map((item) => <YearBlogList year={item[0]} thisYearList={item[1]} />)
   }
 </BaseLayout>
