@@ -21,7 +21,7 @@ useState() => value + setter
 useSignals() => getter + setter
 ```
 
-Signals 和 State 之间的主要区别在于 Signals 返回一个 getter 和一个 setter，而非响应式系统返回值（和一个 setter）。_注意: 有些反应式系统一起返回 getter/setter，有些则作为两个独立的引用，但其思想是相同的。_
+Signals 和 State 之间的主要区别在于 Signals 返回一个 _getter_ 和一个 _setter_ ，而非响应式系统返回其值（和一个 _setter_ ）。_注意: 有些响应式系统一起返回 getter/setter，有些则作为两个独立的引用，但其思想是相同的。_
 
 ### State vs. State
 
@@ -30,7 +30,7 @@ Signals 和 State 之间的主要区别在于 Signals 返回一个 getter 和一
 - **StateReference**： _reference_ 是指状态的引用（译者注：我理解是 _state_ 的指针）。
 - **StateValue**：这是存放在在状态引用 或 存储中的实际的 _value_。
 
-为什么返回 getter 比返回其值要有优势？因为通过返回 getter，你可以将**状态引用**的传递与**状态值**的读取分离开来。
+为什么返回 _getter_ 比返回其值要有优势？因为通过返回 _getter_ ，你可以将**状态引用**的传递与**状态值**的读取分离开来。
 
 让我们以一段 SolidJS 代码为例：
 
@@ -50,7 +50,7 @@ export function Counter() {
 
 上面解释了 _Signals_ 与旧的 _State_ 的不同，但没有解释为什么我们应该关注这一差异。
 
-Signals 若是可响应的！就意味着它们会追踪对状态感兴趣的（订阅）人，如果状态发生了变化，就通知订阅者状态发生了变化。
+Signals 是可响应的！就意味着它们会追踪对状态感兴趣的（订阅）人，如果状态发生了变化，就通知订阅者状态发生了变化。
 
 要具有响应性，Signals 必须收集谁对 Signals 的值感兴趣（订阅）。他们通过观察在哪些上下文中调用 _state-getter_ 来获得这些信息。通过从 getter 获取值的行为，可以告诉 Signals 这个地方对其值感兴趣。如果值发生更改，则需要使该位置发生重新计算。换句话说，调用 _getter_ 将创建订阅。
 
@@ -187,4 +187,110 @@ export function Display({ count }: { count: number }) {
 
 让我们看一个 React 的购物车示例：
 
-> 还在进行中 😭
+```tsx
+export default function App() {
+  console.log('<App />')
+  const [cart, setCart] = useState([])
+
+  return (
+    <div>
+      <Main setCart={setCar} />
+      <NavBar cart={cart} />
+    </div>
+  )
+}
+```
+
+```tsx
+export function Main({ setCart }: any) {
+  console.log(`<Main />`)
+
+  return (
+    <div>
+      <Product setCart={setCart} />
+    </div>
+  )
+}
+
+export function Product({ setCart }: any) {
+  console.log(`<Product />`)
+
+  return (
+    <div>
+      <button onClick={() => setCart((cart: any) => [...cart, 'product'])}>Add to cart</button>
+    </div>
+  )
+}
+```
+
+```tsx
+export function NavBar({ cart }: any) {
+  console.log(`<NavBar />`)
+
+  return (
+    <div>
+      <Cart cart={cart} />
+    </div>
+  )
+}
+
+export function Cart({ cart }: any) {
+  console.log(`<Cart />`)
+
+  return <div>Cart: {JSON.stringify(cart)}</div>
+}
+```
+
+购物车的状态通常被拉高放置在购买按钮和渲染购物车的位置之上的最顶级的公共父级。它通常非常接近组件渲染树的顶部。所以在我们的例子中，我们称之为公共祖先组件。
+
+共同祖先组件有两个分支：
+
+1. `setCart prop-drilling` 分支：透传 `setCart` ，穿过了许多层组件后，达到了购买按钮组件。
+2. `cart prop-drilling` 分支：另一个 Props `cart` 状态 ，也穿过了许多层组件，直到它到达购物车组件。
+
+遇到的问题是：每次点击 _**购买**_ 按钮时，组件树中大多数组件都必须重渲染。这导致如下的结果：
+
+```shell
+# "buy" button clicked
+<App/>
+<Main/>
+<Product/>
+<NavBar/>
+<Cart/>
+```
+
+如果你使用了缓存的手段，那么你可以避免 `setCart prop-drilling` 分支重渲染，而不是 `cart prop-drilling` 分支，所以输出仍然是这样的：
+
+```shell
+# "buy" button clicked
+<App/>
+<NavBar/>
+<Cart/>
+```
+
+而这种情况在使用 Signals 时，会打印如下结果：
+
+```shell
+# "buy" button clicked
+<Cart/>
+```
+
+这大大减少了需要执行的代码量。
+
+## 哪些框架支持 Signals ？
+
+![image.png](https://s2.loli.net/2023/03/01/685d2Z7CXMnUTGW.png)
+
+目前支持 Signals 的且较为流行的 Web 框架有：[Vue](https://vuejs.org/)、 [Preact](https://preactjs.com/) 、 [Solid](https://www.solidjs.com/) 以及 [Qwik](https://qwik.builder.io/) 。
+
+在当前，Signals 并不是新鲜的东西；在此之前，它们已经存在于 [Knokout](https://knockoutjs.com/) 或其他框架中了。不同的是，近年来，通过巧妙的编译技巧和与 JSX 的深度集成，Signals 已经极大地改进了它的 DX（开发者体验），这使得它非常简洁，使用起来非常愉快 -- 而这部分正是较新的部分。
+
+## 结论
+
+Signals 是在应用程序中存储状态的一种方式，类似于 React 中的 `useState()`。然而，最关键的区别在于，Signals 返回的是 _getter_ 和 _setter_ ，而非响应式系统只返回其 _value_ 和 _setter_ 。
+
+这很这点恰恰很重要，因为 Signals 是响应式的，这意味着它们需要追踪对状态感兴趣的用户，并将状态更改通知订阅者。这是通过观察调用 _state-getter_ 的上下文来实现的，它创建了一个订阅。
+
+相反，React 中的 `useState()` 只返回 _state-value_ ，这意味着它不知道组件如何使用它的 _state-value_ ，所以必须重新呈现整个组件树以响应状态的更改。
+
+近年来，Signals 已经拥有了良好的 DX，这使得它们并不比传统系统难用。出于这个原因，我认为你将使用的下一个框架会是基于 Signals 的响应式框架。
