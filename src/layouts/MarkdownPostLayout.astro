@@ -10,7 +10,8 @@ const { frontmatter, headings, url } = Astro.props
   <meta name="twitter:title" content={frontmatter.title} />
   <meta name="twitter:description" content={frontmatter.description} />
   <meta name="twitter:creator" content="@purexitong0101" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://aqingcyan.me/_astro/logo.0ede0e64.png" />
 </head>
 <BaseLayout pageTitle={frontmatter.title}>
   <h1 class="blog-title">{frontmatter.title}</h1>
