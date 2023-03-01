@@ -30,7 +30,7 @@ Signals 和 State 之间的主要区别在于 Signals 返回一个 _getter_ 和�
 本质问题：是 _State_ 这个单词混淆了两个不同的概念。
 
 - **StateReference**： _reference_ 是指状态的引用（译者注：我理解是 _state_ 的指针）。
-- **StateValue**：这是存放在在状态引用 或 存储中的实际的 _value_。
+- **StateValue**：这是存放在状态引用 或 存储中的实际的 _value_。
 
 为什么返回 _getter_ 比返回其值更有优势？因为通过返回 _getter_ ，你可以将**状态引用**的传递与**状态值**的读取分离开来。
 
