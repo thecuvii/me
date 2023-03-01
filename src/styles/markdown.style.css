@@ -124,8 +124,8 @@
 }
 
 .article code {
-  font-family: DM Mono, Input Mono, Fira Code, monospace;
-  font-size: 0.9rem;
+  font-family: DM Mono, Input Mono, Fira Code, monospace !important;
+  font-size: 0.9rem !important;
 }
 
 .article p code,
