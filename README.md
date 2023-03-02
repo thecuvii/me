@@ -1,8 +1,6 @@
-# AqingCyan.md
+# Hi! I'm AqingCyan 👋
 
 This is my blog
-
-## Hi! I'm AqingCyan 👋
 
 I'm a software development. My email is AqingCyan@gmail.com.
 
