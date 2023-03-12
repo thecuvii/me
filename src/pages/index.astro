@@ -9,12 +9,11 @@ import NestJsLink from '../components/LinkComponents/NestJsLink.astro'
 import VueLink from '../components/LinkComponents/VueLink.astro'
 import NodeJsLink from '../components/LinkComponents/NodeJsLink.astro'
 import GolangLink from '../components/LinkComponents/GolangLink.astro'
-import TwitterLink from '../components/LinkComponents/TwitterLink.astro'
 import GithubLink from '../components/LinkComponents/GithubLink.astro'
 import AstroLink from '../components/LinkComponents/AstroLink.astro'
 
-const allPosts = await Astro.glob('../pages/posts/*.{md,mdx}')
-const allWeeks = await Astro.glob('../pages/weekly/*.{md,mdx}')
+const allPosts = await Astro.glob('./posts/*.{md,mdx}')
+const allWeeks = await Astro.glob('./weekly/*.{md,mdx}')
 const allBlogs = [...allPosts, ...allWeeks]
 const postCollects = {}
 allBlogs.forEach((item) => {
@@ -43,7 +42,6 @@ const pageTitle = 'AqingCyan'
     <VueLink text="Vue" href="/tags/vue" /> 与
     <GolangLink text="Golang" href="/tags/golang" />，希望能够使用它们做出有意思的成果。你可以通过：
     <EmailLink text="我的邮箱" href="mailto:AqingCyan@gmail.com" />、
-    <!-- <TwitterLink text="推特" href="https://twitter.com/purexitong0101" />、 -->
     <GithubLink text="Github" href="https://github.com/aqingcyan" />
     来与我取得联系。
     <br />
