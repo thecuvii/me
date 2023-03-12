@@ -4,11 +4,11 @@ export async function get() {
   return rss({
     title: 'AqingCyan | Blog',
     description: 'AqingCyan Blog',
-    site: 'www.aqingcyan.me',
-    items: await pagesGlobToRssItems([
-      ...import.meta.glob('./posts/*.{md,mdx}'),
-      ...import.meta.glob('./weekly/*.{md,mdx}'),
-    ]),
+    site: 'https://www.aqingcyan.me',
+    items: [
+      ...(await pagesGlobToRssItems(import.meta.glob('./posts/*.{md,mdx}'))),
+      ...(await pagesGlobToRssItems(import.meta.glob('./weekly/*.{md,mdx}'))),
+    ],
     customData: `<language>zh-CN</language>`,
   })
 }
