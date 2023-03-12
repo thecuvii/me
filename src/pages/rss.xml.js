@@ -4,8 +4,11 @@ export async function get() {
   return rss({
     title: 'AqingCyan | Blog',
     description: 'AqingCyan Blog',
-    site: 'https://fabulous-croissant-b4f75b.netlify.app/',
-    items: await pagesGlobToRssItems(import.meta.glob('./**/*.md')),
+    site: 'www.aqingcyan.me',
+    items: await pagesGlobToRssItems([
+      ...import.meta.glob('./posts/*.{md,mdx}'),
+      ...import.meta.glob('./weekly/*.{md,mdx}'),
+    ]),
     customData: `<language>zh-CN</language>`,
   })
 }
