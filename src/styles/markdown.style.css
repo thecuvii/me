@@ -42,13 +42,16 @@
 
 .article h1 {
   font-size: 1.75rem;
+  font-weight: bold;
 }
 .article h2 {
   font-size: 1.375rem;
+  font-weight: bold;
 }
 
 .article h3 {
   font-size: 1.125rem;
+  font-weight: bold;
 }
 
 .article h4 {
@@ -95,6 +98,8 @@
 
 .article img {
   width: 100%;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+  transform: translate3d(0, -2px, 0); /* 添加微微漂浮的效果 */
 }
 
 .article blockquote p,
