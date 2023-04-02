@@ -170,3 +170,15 @@
 .article em {
   color: var(--primary-color);
 }
+
+.article iframe {
+  width: 100%;
+  height: 450px;
+}
+
+@media screen and (max-width: 400px) {
+  .article iframe {
+    width: 100%;
+    height: 200px;
+  }
+}
