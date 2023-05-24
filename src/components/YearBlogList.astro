@@ -11,7 +11,7 @@ thisYearList.sort((one, two) => dayjs(two.frontmatter.pubDate).valueOf() - dayjs
   {
     thisYearList.map(({ frontmatter, url }, index) => (
       <div class="post-title-box">
-        <span class="post-index">{index + 1 > 10 ? index + 1 : `0${index + 1}`}</span>
+        <span class="post-index">{index + 1 > 9 ? index + 1 : `0${index + 1}`}</span>
         <div class="title-content">
           <a class="title" href={url}>
             {frontmatter.title}
